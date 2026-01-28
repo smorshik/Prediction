@@ -24,7 +24,6 @@ def age_category(Age):
 df['Age'] = df['Age'].apply(age_category)
 df['Pclass'] = df['Pclass']**2 
 
-print(df.info())
 
 features = ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch']
 
@@ -38,8 +37,14 @@ model = LinearRegression()
 model.fit(xtrain, ytrain)
 print(model.score(xtest, ytest))
 
-#Pclass Sex Age SibSp Parch
-jack = [[9, 0, 1, 1, 0]]
+
+pclass = int(input("Класс (1, 2, 3): "))**2
+sex = int(input("Пол (0 - мужской, 1 - женский): "))
+age = int(input("Возраст: "))
+sibsp = int(input("Количество братьев/сестер: "))
+parch = int(input("Количество родителей/детей: "))
+
+jack = [[pclass, sex, age_category(age), sibsp, parch]]
 jack_scaled = scaler.transform(jack)
 
 prediction = model.predict(jack_scaled)
@@ -49,9 +54,25 @@ print("Цена жилья", prediction)
 coeff = pd.DataFrame(model.coef_.T, index=features, columns=['Вес (Weight)'])
 print(coeff)
 print("Базовый уровень (Intercept):", model.intercept_)
-print(model.score(xtest, ytest))
 
-'''predictions = model.predict(xtest)
+
+def convert(pounds_1912):
+    # 1. Золотое содержание 1 фунта в 1912 году (в граммах)
+    gold_per_pound_1912 = 7.322
+    
+    # Актуальная цена золота за 1 грамм в USD (на 28.01.2026)
+    current_gold_price_usd_per_gram = 170.0 
+    
+    # Считаем общую массу золота в фунтах 1912 года
+    total_gold_grams = pounds_1912 * gold_per_pound_1912
+    
+    # Переводим это золото в современные доллары
+    modern_usd = total_gold_grams * current_gold_price_usd_per_gram
+    
+    return round(modern_usd, 2)
+
+print("Цена в долларах:", convert(prediction[0]))
+predictions = model.predict(xtest)
 
 fig, ax = plt.subplots(1, 2)
 
@@ -63,4 +84,4 @@ ax[0].set_title("Обучение")
 ax[1].scatter(xtest[:, 0], ytest, color='orange', alpha=0.5)    # Реальные ответы
 ax[1].scatter(xtest[:, 0], predictions, color='red', alpha=0.5) # Предсказания
 ax[1].set_title("Тест vs Предсказание")
-plt.show()'''
+plt.show()
