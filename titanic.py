@@ -5,8 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 
-url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
-df = pd.read_csv(url, index_col=0, parse_dates=True)
+df = pd.read_csv('titanic.csv', index_col=0, parse_dates=True)
 df.head()
 
 df['Sex'] = df['Sex'].map({'male': 0, 'female': 1})
@@ -35,7 +34,6 @@ xtest = scaler.transform(xtest)
 
 model = LinearRegression()
 model.fit(xtrain, ytrain)
-print(model.score(xtest, ytest))
 
 
 pclass = int(input("Класс (1, 2, 3): "))**2
