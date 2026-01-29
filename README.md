@@ -15,5 +15,7 @@
 2. Установите зависимости: `pip install pandas matplotlib scikit-learn`
 3. Запустите файл: `python main.py`
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/smorshik/Prediction/blob/master/Titanic_Analysis.ipynb)
+
 ### Результаты
 Модель визуализирует разницу между реальными данными и предсказаниями, а также позволяет ввести данные своего "пассажира" и узнать примерную стоимость его билета.
